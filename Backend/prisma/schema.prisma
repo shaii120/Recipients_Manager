@@ -1,0 +1,21 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+generator zod {
+  provider = "prisma-zod-generator"
+  output   = "./generated"
+}
+
+datasource db {
+  provider = "sqlserver"
+}
+
+model Receipt {
+  id        String   @id @default(uuid())
+  title     String
+  amount    Float
+  currency  String
+  vendor    String?
+  createdAt DateTime @default(now())
+}
