@@ -1,0 +1,20 @@
+{
+  "name": "prisma-generator-zod-local",
+  "version": "0.0.1",
+  "type": "module",
+  "main": "dist/generator.js",
+  "bin": {
+    "prisma-generator-zod-local": "dist/bin.js"
+  },
+  "scripts": {
+    "clean": "rm -rf dist",
+    "build": "tsc",
+    "watch": "tsc --watch",
+    "prepare": "npm run build"
+  },
+  "dependencies": {
+    "@prisma/generator-helper": "^7.1.0",
+    "typescript": "^5.9.3",
+    "zod": "^4.1.13"
+  }
+}

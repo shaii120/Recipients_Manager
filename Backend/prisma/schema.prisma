@@ -2,13 +2,14 @@ generator client {
   provider = "prisma-client-js"
 }
 
-generator zod {
-  provider = "prisma-zod-generator"
-  output   = "./generated"
-}
-
 datasource db {
   provider = "sqlserver"
+}
+
+// using a local generator because the published one eithet out of support or doesn't fully supprt ESM
+generator zod {
+  provider = "prisma-generator-zod-local"
+  output   = "./generated/zod"
 }
 
 model Receipt {

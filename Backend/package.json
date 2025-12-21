@@ -4,18 +4,25 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/server.ts",
+    "prisma:generate": "prisma generate",
+    "generator:build": "npm --prefix prisma/generators/prisma-generator-zod-local run build",
+    "generator:watch": "npm --prefix prisma/generators/prisma-generator-zod-local run watch",
+    "setup": "npm install && npm run prisma:generate"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "type": "commonjs",
+  "type": "module",
   "dependencies": {
+    "@prisma/adapter-mssql": "^7.2.0",
     "@prisma/client": "^7.1.0",
+    "@prisma/generator-helper": "^7.1.0",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "prisma": "^7.1.0",
-    "prisma-zod-generator": "^2.1.2",
+    "prisma-generator-zod-local": "file:prisma/generators/prisma-generator-zod-local",
     "zod": "^4.1.13"
   },
   "devDependencies": {
