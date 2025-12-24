@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "clean": "rm -rf dist && rm -rf node_modules",
     "dev": "nodemon src/server.ts",
     "prisma:generate": "prisma generate",
     "generator:build": "npm --prefix prisma/generators/prisma-generator-zod-local run build",
@@ -26,6 +27,8 @@
     "zod": "^4.1.13"
   },
   "devDependencies": {
-    "@types/express": "^5.0.6"
+    "@types/express": "^5.0.6",
+    "nodemon": "^3.1.11",
+    "ts-node": "^10.9.2"
   }
 }

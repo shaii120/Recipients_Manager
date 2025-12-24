@@ -15,8 +15,10 @@ app.post("/receipts", async (req, res) => {
     const parsedData = ReceiptCreateSchema.parse(req.body);
     const receipt = await prisma.receipt.create({ data: parsedData });
     res.json(receipt);
-  } catch (err) {
-    res.status(400).json({ error: "Invalid data" });
+  } catch (err: Error | any) {
+    console.error(err.message);
+    console.log(err.errors);
+    res.status(400).json({ error: err.message });
   }
 });
 
