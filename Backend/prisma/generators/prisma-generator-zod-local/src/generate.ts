@@ -1,7 +1,5 @@
 import { GeneratorOptions } from '@prisma/generator-helper';
-import { writeFile, mkdir } from 'node:fs/promises';
-import { join } from 'node:path';
-import { modelToSchemas } from './zod-mapper.js';
+import { mkdir } from 'node:fs/promises';
 import { emitIndex, emitSchema } from './emitter.js'
 
 export async function generate(options: GeneratorOptions) {
