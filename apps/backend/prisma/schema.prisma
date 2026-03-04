@@ -9,7 +9,7 @@ datasource db {
 // using a local generator because the published one eithet out of support or doesn't fully supprt ESM
 generator zod {
   provider = "prisma-generator-zod-local"
-  output   = "./generated/zod"
+  output   = "../../packages/schemas/generated"
 }
 
 model Receipt {

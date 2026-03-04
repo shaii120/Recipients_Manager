@@ -10,11 +10,14 @@
     "clean": "rm -rf dist",
     "build": "tsc",
     "watch": "tsc --watch",
-    "prepare": "npm run build"
+    "prepare": "pnpm run build"
   },
   "dependencies": {
     "@prisma/generator-helper": "^7.1.0",
     "typescript": "^5.9.3",
     "zod": "^4.1.13"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.35"
   }
 }

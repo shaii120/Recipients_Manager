@@ -20,16 +20,18 @@
     "@prisma/adapter-mssql": "^7.2.0",
     "@prisma/client": "^7.1.0",
     "@prisma/generator-helper": "^7.1.0",
+    "@receipts/shared-schemas": "workspace:*",
     "cors": "^2.8.6",
     "dotenv": "^17.2.3",
     "express": "^5.2.1",
     "prisma": "^7.1.0",
-    "prisma-generator-zod-local": "file:../prisma-generators/prisma-generator-zod-local",
+    "prisma-generator-zod-local": "file:../packages/prisma-generator-zod-local",
     "zod": "^4.1.13"
   },
   "devDependencies": {
     "@types/cors": "^2.8.19",
     "@types/express": "^5.0.6",
+    "@types/node": "^20.0.0",
     "nodemon": "^3.1.11",
     "ts-node": "^10.9.2"
   }

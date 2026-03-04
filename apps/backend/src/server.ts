@@ -4,7 +4,7 @@ import cors from "cors";
 
 import { PrismaClient } from "@prisma/client";
 import { PrismaMssql } from "@prisma/adapter-mssql";
-import { ReceiptCreateSchema } from "../prisma/generated/zod/index.js";
+import { ReceiptCreateSchema } from "@receipts/shared-schemas";
 
 const PORT = process.env.PORT || 3001;
 const adapter = new PrismaMssql(process.env.DATABASE_URL);

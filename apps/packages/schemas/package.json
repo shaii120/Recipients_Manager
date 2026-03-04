@@ -1,0 +1,15 @@
+{
+    "name": "@receipts/shared-schemas",
+    "version": "1.0.0",
+    "main": "generated/index.js",
+    "types": "generated/index.d.ts",
+    "files": [
+        "generated"
+    ],
+    "scripts": {
+        "build": "tsc --project tsconfig.build.json"
+    },
+    "dependencies": {
+        "zod": "^4.1.13"
+    }
+}
