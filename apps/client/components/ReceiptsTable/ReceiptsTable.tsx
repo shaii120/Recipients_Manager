@@ -1,26 +1,20 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { ReceiptModelSchema, type ReceiptModel } from "@receipts/shared-schemas";
 import styles from "./ReceiptsTable.module.css";
-import 'dotenv/config';
 
-type Receipt = {
-  id: string;
-  title: string;
-  amount: number;
-  currency: string;
-  vendor: string | null;
-};
-const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL
+const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export default function ReceiptsTable() {
-  const [receipts, setReceipts] = useState<Receipt[]>([]);
+export default function ReceiptsTable({ key }: { key?: number }) {
+  const [receipts, setReceipts] = useState<ReceiptModel[]>([]);
 
   useEffect(() => {
     fetch(`${BASE_URL}/receipts`)
       .then((res) => res.json())
-      .then((data) => { setReceipts(data) })
-      .catch((err) => console.error(err));
+      .then((data) => data.filter((rec: any) => ReceiptModelSchema.safeParse(rec).success))
+      .then((data) => setReceipts(data))
+      .catch(console.error);
   }, []);
 
   return (
@@ -34,15 +28,16 @@ export default function ReceiptsTable() {
         </tr>
       </thead>
       <tbody>
-        {receipts.map((r) => (
-          <tr key={r.id} className={styles.row}>
-            <td className={styles.cell}>{r.title}</td>
-            <td className={styles.cell}>{r.amount}</td>
-            <td className={styles.cell}>{r.currency}</td>
-            <td className={styles.cell}>{r.vendor || "-"}</td>
+        {receipts.map((rec) => (
+          <tr key={rec.id} className={styles.row}>
+            <td className={styles.cell}>{rec.title}</td>
+            <td className={styles.cell}>{rec.amount}</td>
+            <td className={styles.cell}>{rec.currency}</td>
+            <td className={styles.cell}>{rec.vendor || "-"}</td>
           </tr>
         ))}
       </tbody>
     </table>
   );
 }
+

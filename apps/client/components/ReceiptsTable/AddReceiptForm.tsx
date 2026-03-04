@@ -1,85 +1,66 @@
 "use client";
 
-import { useState } from "react";
+import { SubmitHandler, useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { ReceiptCreateSchema, type ReceiptCreate } from "@receipts/shared-schemas";
 import styles from "./ReceiptsTable.module.css";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-type Props = {
-    onAdded?: () => void;
+type FormFieldProps = {
+    label: string;
+    placeholder: string;
+    type?: string;
+    register: any;
 };
 
-export default function AddReceiptForm({ onAdded }: Props) {
-    const [title, setTitle] = useState("");
-    const [amount, setAmount] = useState(0);
-    const [currency, setCurrency] = useState("USD");
-    const [vendor, setVendor] = useState("");
-    const [saving, setSaving] = useState(false);
-    const [error, setError] = useState<string | null>(null);
+const FormField = ({ placeholder, type = "text", register, label }: FormFieldProps) => (
+    <input className={styles.input} placeholder={placeholder} type={type} {...register(label)} />
+);
 
-    async function handleSubmit(e: React.FormEvent) {
-        e.preventDefault();
-        setSaving(true);
-        setError(null);
+export default function AddReceiptForm({ onAdded }: { onAdded?: () => void }) {
+    const {
+        register,
+        handleSubmit,
+        reset,
+        formState: { errors, isSubmitting },
+        setError
+    } = useForm<ReceiptCreate>({
+        resolver: zodResolver(ReceiptCreateSchema),
+        defaultValues: { title: "", amount: 0, currency: "USD", vendor: null as any },
+    });
 
+    const onSubmit: SubmitHandler<ReceiptCreate> = async (data: ReceiptCreate) => {
         try {
-            const payload = { title, amount, currency, vendor: vendor || null };
             const res = await fetch(`${BASE_URL}/receipts`, {
                 method: "POST",
                 headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(payload),
+                body: JSON.stringify(data),
             });
-            if (!res.ok) {
-                const data = await res.json();
-                throw new Error(data?.error || "Failed to create receipt");
-            }
-            setTitle("");
-            setAmount(0);
-            setCurrency("USD");
-            setVendor("");
-            onAdded && onAdded();
-        } catch (err: any) {
-            console.error(err);
-            setError(err.message);
-        } finally {
-            setSaving(false);
+
+            if (!res.ok) throw new Error((await res.json())?.error || "Failed");
+            reset();
+            onAdded?.();
+        } catch (err) {
+            setError("root", { message: err instanceof Error ? err.message : "Unknown error" });
         }
-    }
+    };
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit} style={{ marginBottom: "16px" }}>
-            <input
-                className={styles.input}
-                placeholder="Title"
-                value={title}
-                onChange={(e) => setTitle(e.target.value)}
-                required
-            />
-            <input
-                className={styles.input}
-                placeholder="Amount"
-                type="number"
-                value={amount}
-                onChange={(e) => setAmount(Number(e.target.value))}
-                required
-            />
-            <input
-                className={styles.input}
-                placeholder="Currency"
-                value={currency}
-                onChange={(e) => setCurrency(e.target.value)}
-                required
-            />
-            <input
-                className={styles.input}
-                placeholder="Vendor (optional)"
-                value={vendor}
-                onChange={(e) => setVendor(e.target.value)}
-            />
-            <button className={styles.button} disabled={saving} type="submit">
-                {saving ? "Adding..." : "Add Receipt"}
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)} style={{ marginBottom: "16px" }}>
+            <FormField label="title" placeholder="Title" register={register} />
+            <FormField label="amount" placeholder="Amount" type="number" register={register} />
+            <FormField label="currency" placeholder="Currency" register={register} />
+            <FormField label="vendor" placeholder="Vendor (optional)" register={register} />
+
+            {errors.root && <div className={styles.error}>{String(errors.root?.message)}</div>}
+            {Object.keys(errors).some(k => k !== "root") && (
+                <div className={styles.error}>Please check all fields</div>
+            )}
+
+            <button className={styles.button} disabled={isSubmitting} type="submit">
+                {isSubmitting ? "Adding..." : "Add Receipt"}
             </button>
-            {error && <div className={styles.error}>{error}</div>}
         </form>
     );
 }
