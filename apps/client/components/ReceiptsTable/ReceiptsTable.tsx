@@ -6,13 +6,12 @@ import styles from "./ReceiptsTable.module.css";
 
 const BASE_URL = process.env.NEXT_PUBLIC_API_BASE_URL;
 
-export default function ReceiptsTable({ key }: { key?: number }) {
+export default function ReceiptsTable() {
   const [receipts, setReceipts] = useState<ReceiptModel[]>([]);
 
   useEffect(() => {
     fetch(`${BASE_URL}/receipts`)
       .then((res) => res.json())
-      .then((data) => data.filter((rec: any) => ReceiptModelSchema.safeParse(rec).success))
       .then((data) => setReceipts(data))
       .catch(console.error);
   }, []);

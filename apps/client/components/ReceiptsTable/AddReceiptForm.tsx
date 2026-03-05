@@ -14,9 +14,19 @@ type FormFieldProps = {
     register: any;
 };
 
-const FormField = ({ placeholder, type = "text", register, label }: FormFieldProps) => (
-    <input className={styles.input} placeholder={placeholder} type={type} {...register(label)} />
-);
+const FormField = ({ placeholder, type = "text", register, label }: FormFieldProps) => {
+    const registerOptions = (type === "number") ? { valueAsNumber: true } : {};
+    const stepAttr = (type === "number") ? { step: "any" } : {};
+    return (
+        <input
+            className={styles.input}
+            placeholder={placeholder}
+            type={type}
+            {...stepAttr}
+            {...register(label, registerOptions)}
+        />
+    );
+};
 
 export default function AddReceiptForm({ onAdded }: { onAdded?: () => void }) {
     const {

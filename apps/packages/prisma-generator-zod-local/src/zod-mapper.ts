@@ -19,6 +19,9 @@ function fieldToZod(field: DMMF.Field): string {
   if (!field.isRequired) {
     zodType += '.nullable()';
   }
+  else if (field.type == "String") {
+    zodType += ".nonempty()"
+  }
 
   if (field.isList) {
     zodType = `z.array(${zodType})`;
