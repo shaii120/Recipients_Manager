@@ -3,13 +3,14 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "generator_path": "../packages/prisma-generator-zod-local",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "clean": "rm -rf dist && rm -rf node_modules",
     "dev": "nodemon src/server.ts",
     "prisma:generate": "prisma generate",
-    "generator:build": "pnpm --prefix ../prisma-generators/prisma-generator-zod-local run build",
-    "generator:watch": "pnpm --prefix ../prisma-generators/prisma-generator-zod-local run watch",
+    "generator:build": "pnpm --prefix $npm_package_generator_path run build",
+    "generator:watch": "pnpm --prefix $npm_package_generator_path run watch",
     "setup": "pnpm install && pnpm run prisma:generate"
   },
   "keywords": [],

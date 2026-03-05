@@ -4,7 +4,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "start": "next start"
+    "start": "next start",
+    "clean": "rm -rf dist && rm -rf node_modules && rm -rf .next"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",

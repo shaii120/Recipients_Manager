@@ -1,12 +1,14 @@
 {
     "name": "@receipts/shared-schemas",
     "version": "1.0.0",
+    "type": "module",
     "main": "generated/index.js",
     "types": "generated/index.d.ts",
     "files": [
         "generated"
     ],
     "scripts": {
+        "clean": "rm -rf dist && rm -rf node_modules",
         "build": "tsc --project tsconfig.build.json"
     },
     "dependencies": {

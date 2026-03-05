@@ -1,5 +1,11 @@
 {
   "name": "recipients-manager",
   "private": true,
-  "workspaces": ["apps/*"]
+  "workspaces": [
+    "apps/*"
+  ],
+  "scripts": {
+    "clean": "rm -rf node_modules && rm -rf pnpm-lock.yaml && pnpm -r run clean",
+    "setup": "pnpm install && pnpm -F prisma-generator-zod-local build && pnpm -F backend run prisma:generate"
+  }
 }
