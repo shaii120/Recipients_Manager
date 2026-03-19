@@ -1,11 +1,4 @@
 import type { DMMF } from '@prisma/generator-helper';
-import { fi } from 'zod/locales';
-
-export function fieldsToTypes(fields: DMMF.Field[]): string {
-  return fields
-    .map(field => `\t${field.name}: ${prismaScalarToZodType(field.type)}`)
-    .join(',\n');
-}
 
 export function fieldsToZodObject(fields: DMMF.Field[]): string {
   return fields
