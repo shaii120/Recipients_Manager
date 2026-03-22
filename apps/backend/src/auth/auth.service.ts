@@ -1,0 +1,20 @@
+import { prisma } from "../lib/prisma.js";
+import { hashPassword, comparePassword } from "../lib/hash.js";
+import { dbExecute } from "../lib/db.js";
+
+export async function registerUser(email: string, password: string) {
+  const passwordHash = await hashPassword(password);
+  return dbExecute(() =>
+    prisma.user.create({ data: { email, passwordHash } }));
+}
+
+export async function loginUser(email: string, password: string) {
+  const user = await dbExecute(() =>
+    prisma.user.findUnique({ where: { email } }));
+  if (!user) return null;
+
+  const valid = await comparePassword(password, user.passwordHash);
+  if (!valid) return null;
+
+  return user;
+}

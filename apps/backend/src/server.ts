@@ -1,8 +1,10 @@
 import express from "express";
 import 'dotenv/config';
 import cors from "cors";
+import cookieParser from "cookie-parser";
 
 import { errorMiddleware } from "./middlewares/error.middleware.js";
+import authRoutes from "./routes/auth.routes.js";
 import receiptsRoutes from "./routes/receipts.routes.js";
 
 const PORT = process.env.PORT || 3001;
@@ -14,7 +16,9 @@ app.use(cors({
   credentials: true
 }));
 app.use(express.json());
+app.use(cookieParser());
 // Routes setup
+app.use("/auth", authRoutes);
 app.use("/receipts", receiptsRoutes);
 // Error handling middleware
 app.use(errorMiddleware);

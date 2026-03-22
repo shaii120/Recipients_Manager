@@ -19,4 +19,21 @@ model Receipt {
   currency  String
   vendor    String?
   createdAt DateTime @default(now())
+  projectId String?
+  Project   Project? @relation(fields: [projectId], references: [id])
+}
+
+model User {
+  id           String    @id @default(uuid())
+  email        String    @unique
+  passwordHash String
+  projects     Project[]
+}
+
+model Project {
+  id          String    @id @default(uuid())
+  name        String
+  description String?
+  Receipts    Receipt[]
+  users       User[]
 }
