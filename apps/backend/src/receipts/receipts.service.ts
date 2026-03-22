@@ -1,9 +1,12 @@
 import { prisma } from "../lib/prisma.js";
+import { dbExecute } from "../lib/db.js";
 
 export async function createReceiptService(data: any) {
-  return prisma.receipt.create({ data });
+  return dbExecute(() =>
+    prisma.receipt.create({ data }));
 }
 
 export async function getReceiptsService() {
-  return prisma.receipt.findMany();
+  return dbExecute(() =>
+    prisma.receipt.findMany());
 }

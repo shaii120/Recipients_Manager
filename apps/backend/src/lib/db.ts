@@ -1,0 +1,9 @@
+import { mapPrismaError } from "../errors/prisma.error.mapper.js";
+
+export async function dbExecute<T>(operation: () => Promise<T>): Promise<T> {
+  try {
+    return await operation();
+  } catch (err) {
+    mapPrismaError(err);
+  }
+}
