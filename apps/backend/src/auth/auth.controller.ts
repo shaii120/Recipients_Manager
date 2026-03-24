@@ -1,7 +1,8 @@
 import { Request, Response } from "express";
-import { registerUser, loginUser } from "./auth.service.js";
+import { registerUser, loginUser, getUserById } from "./auth.service.js";
 import { signToken } from "../lib/jwt.js";
 import { RegisterSchema, LoginSchema } from "@receipts/shared-schemas/auth";
+import { UserPublic } from "./auth.types.js";
 
 export async function register(req: Request, res: Response) {
   const data = RegisterSchema.parse(req.body);
@@ -31,4 +32,9 @@ export async function login(req: Request, res: Response) {
 export function logout(_req: Request, res: Response) {
   res.clearCookie("token");
   res.send("Logged out");
+}
+
+export async function me(req: Request, res: Response) {
+  const user: UserPublic | null = await getUserById(req.user?.userId!);
+  res.json(user);
 }
