@@ -1,16 +1,20 @@
-export const metadata = {
-  title: "Receipts Manager",
-  description: "Next.js App Router Example",
-};
+"use client";
 
-export default function RootLayout({
-  children,
-}: {
-  children: React.ReactNode;
-}) {
+import { AuthProvider } from "@/context/AuthContext";
+import UserHeader from "@/components/AuthButton/UserHeader";
+import styles from "./Layout.module.css";
+
+export default function RootLayout({ children }: { children: React.ReactNode }) {
   return (
     <html lang="en">
-      <body>{children}</body>
+      <body>
+        <AuthProvider>
+          <header className={styles.header}>
+            <UserHeader />
+          </header>
+          <main>{children}</main>
+        </AuthProvider>
+      </body>
     </html>
   );
 }
