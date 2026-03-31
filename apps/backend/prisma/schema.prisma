@@ -19,21 +19,34 @@ model Receipt {
   currency  String
   vendor    String?
   createdAt DateTime @default(now())
-  projectId String?
-  Project   Project? @relation(fields: [projectId], references: [id])
+
+  projectId String
+  project   Project @relation(fields: [projectId], references: [id])
 }
 
 model User {
-  id           String    @id @default(uuid())
-  email        String    @unique
+  id           String @id @default(uuid())
+  email        String @unique
   passwordHash String
-  projects     Project[]
+
+  projects UserProject[]
 }
 
 model Project {
-  id          String    @id @default(uuid())
+  id          String  @id @default(uuid())
   name        String
   description String?
-  Receipts    Receipt[]
-  users       User[]
+
+  receipts Receipt[]
+  users    UserProject[]
+}
+
+model UserProject {
+  userId    String
+  projectId String
+
+  user    User    @relation(fields: [userId], references: [id])
+  project Project @relation(fields: [projectId], references: [id])
+
+  @@id([userId, projectId]) // composite primary key
 }

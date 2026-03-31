@@ -22,8 +22,25 @@ export async function loginUser(email: string, password: string) {
 }
 
 export async function getUserById(userId: string): Promise<UserPublic | null> {
-  return prisma.user.findUnique({
-    where: { id: userId },
-    select: userPublicSelect
-  });
+  return dbExecute(() =>
+    prisma.user.findUnique({
+      where: { id: userId },
+      select: userPublicSelect
+    })
+  );
+}
+
+export async function isUserInProject(userId: string, projectId: string): Promise<boolean> {
+  const relation = await dbExecute(() =>
+    prisma.userProject.findUnique({
+      where: {
+        userId_projectId: {
+          userId: userId,
+          projectId: projectId
+        }
+      }
+    })
+  );
+
+  return !!relation;
 }
