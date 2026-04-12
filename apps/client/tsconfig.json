@@ -9,11 +9,9 @@
     "isolatedModules": true,
     "jsx": "react-jsx",
     "incremental": true,
-    "esModuleInterop": true,
-    "baseUrl": ".",
     "paths": {
       "@/*": [
-        "*"
+        "./*"
       ]
     },
     "plugins": [
