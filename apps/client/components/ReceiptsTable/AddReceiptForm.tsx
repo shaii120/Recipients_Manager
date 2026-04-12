@@ -13,7 +13,7 @@ type FormFieldProps = {
 };
 
 const FormField = ({ placeholder, type = "text", register, label, errors }: FormFieldProps & { errors: any }) => {
-    const registerOptions = (type === "number") ? { valueAsNumber: true } : {};
+    const registerOptions = { valueAsNumber: type === "number" };
     const stepAttr = (type === "number") ? { step: "any" } : {};
 
     return (

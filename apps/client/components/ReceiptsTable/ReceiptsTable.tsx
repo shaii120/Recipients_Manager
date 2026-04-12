@@ -1,15 +1,17 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import { ReceiptModelSchema, type ReceiptModel } from "@receipts/shared-schemas";
+import { useRouter } from "next/router";
+import { type ReceiptModel } from "@receipts/shared-schemas";
+import { getReceipts } from "@/lib/receipts.js";
 import styles from "./ReceiptsTable.module.css";
 
 export default function ReceiptsTable() {
   const [receipts, setReceipts] = useState<ReceiptModel[]>([]);
+  const router = useRouter();
 
   useEffect(() => {
-    fetch(`/api/receipts`)
-      .then((res) => res.json())
+    getReceipts(router)
       .then((data) => setReceipts(data))
       .catch(console.error);
   }, []);
