@@ -73,3 +73,23 @@ export async function updateProject(
     // run all operations atomically
     return prisma.$transaction(queries);
 }
+
+export async function deleteProject(projectId: string) {
+    return dbExecute(() => prisma.project.delete({
+        where: { id: projectId }
+    }));
+}
+
+export async function getProjects(userId: string) {
+    return dbExecute(() => prisma.project.findMany({
+        where: {
+            users: {
+                some: { userId }
+            }
+        },
+        select: {
+            id: true,
+            name: true
+        }
+    }));
+}
