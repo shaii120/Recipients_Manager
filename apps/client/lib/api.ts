@@ -1,11 +1,20 @@
 
 import { StatusCodes } from "http-status-codes";
 
-export async function apiFetch<T>(url: string, router?: any, options?: RequestInit): Promise<T> {
+export async function apiFetch<T>(url: string, options?: RequestInit, router?: any): Promise<T> {
     const res = await fetch(url, { credentials: 'include', ...options });
     if (res.status === StatusCodes.UNAUTHORIZED && router) {
         router.push("/login");
         throw res;
+    }
+    else if (!res.ok) {
+        let message = `HTTP ${res.status}`
+        try {
+            const data = await res.json()
+            message = data.message || data.error || message
+        } catch { }
+
+        throw new Error(message);
     }
 
     const data = res.json();

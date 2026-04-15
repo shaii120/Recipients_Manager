@@ -2,7 +2,10 @@
 
 import { SubmitHandler, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
+
 import { ReceiptCreateSchema, type ReceiptCreate } from "@receipts/shared-schemas";
+import { createReceipt } from "@/lib/receipts"
+import { useProject } from "@/context/ProjectContext";
 import styles from "./ReceiptsTable.module.css";
 
 type FormFieldProps = {
@@ -32,7 +35,8 @@ const FormField = ({ placeholder, type = "text", register, label, errors }: Form
     );
 };
 
-export default function AddReceiptForm({ onAdded }: { onAdded?: () => void }) {
+function AddReceiptForm({ onAdded }: { onAdded?: () => void }) {
+    const { selectedProjectId } = useProject();
     const {
         register,
         handleSubmit,
@@ -41,18 +45,12 @@ export default function AddReceiptForm({ onAdded }: { onAdded?: () => void }) {
         setError
     } = useForm<ReceiptCreate>({
         resolver: zodResolver(ReceiptCreateSchema),
-        defaultValues: { title: "", amount: 0, currency: "USD", vendor: null as any },
+        defaultValues: { title: "", amount: 0, currency: "USD", vendor: null, projectId: selectedProjectId! },
     });
-
     const onSubmit: SubmitHandler<ReceiptCreate> = async (data: ReceiptCreate) => {
         try {
-            const res = await fetch(`/api/receipts`, {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify(data),
-            });
+            await createReceipt(data);
 
-            if (!res.ok) throw new Error((await res.json())?.error || "Failed");
             reset();
             onAdded?.();
         } catch (err) {
@@ -61,12 +59,13 @@ export default function AddReceiptForm({ onAdded }: { onAdded?: () => void }) {
     };
 
     return (
-        <form className={styles.form} onSubmit={handleSubmit(onSubmit)}>
+        <form className={styles.form} onSubmit={handleSubmit(onSubmit)} key={selectedProjectId}>
             <div className={styles.fieldsRow}>
                 <FormField label="title" placeholder="Title" register={register} errors={errors} />
                 <FormField label="amount" placeholder="Amount" type="number" register={register} errors={errors} />
                 <FormField label="currency" placeholder="Currency" register={register} errors={errors} />
                 <FormField label="vendor" placeholder="Vendor (optional)" register={register} errors={errors} />
+                <input type="hidden" {...register("projectId")} />
 
                 <button className={styles.button} disabled={isSubmitting} type="submit">
                     {isSubmitting ? "Adding..." : "Add Receipt"}
@@ -79,4 +78,14 @@ export default function AddReceiptForm({ onAdded }: { onAdded?: () => void }) {
             )}
         </form>
     );
+}
+
+export default function AddReceiptFormWrapper({ onAdded }: { onAdded?: () => void }) {
+    const { selectedProjectId } = useProject()
+
+    if (!selectedProjectId) {
+        return <div>Please select project</div>
+    }
+
+    return <AddReceiptForm key={selectedProjectId} onAdded={onAdded} />
 }

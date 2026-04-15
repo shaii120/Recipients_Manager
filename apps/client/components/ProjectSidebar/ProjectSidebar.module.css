@@ -1,0 +1,53 @@
+.sidebar {
+    width: 250px;
+    border-right: 1px solid #e5e5e5;
+    padding: 8px;
+}
+
+.item {
+    cursor: pointer;
+    padding: 6px 8px;
+}
+
+.item:hover {
+    background-color: #f5f5f5;
+}
+
+.active {
+    font-weight: bold;
+}
+
+.createButton {
+    width: 100%;
+    padding: 8px;
+    margin-bottom: 10px;
+
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    background-color: #f5f5f5;
+    border: 1px solid #ddd;
+    border-radius: 6px;
+
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.createButton:hover {
+    background-color: #eaeaea;
+}
+
+.createButtonIcon {
+    width: 16px;
+    height: 16px;
+
+    stroke: currentColor;
+    stroke-width: 2;
+    fill: none;
+}
+
+.icon {
+    display: flex;
+    align-items: center;
+}
