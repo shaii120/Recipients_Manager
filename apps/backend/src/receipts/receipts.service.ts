@@ -1,15 +1,11 @@
 import { prisma } from "../lib/prisma.js";
 import { dbExecute } from "../lib/db.js";
-import { ReceiptCreate, ReceiptModel } from "@receipts/shared-schemas/generated";
+import { ReceiptCreate, ReceiptModel } from "@receipts/shared-schemas";
 
 export async function createReceiptService(data: ReceiptCreate): Promise<ReceiptModel> {
+  const dataInput = { ...data, vendor: data.vendor ?? null };
   return dbExecute(() =>
-    prisma.receipt.create({ data }));
-}
-
-export async function getReceiptsService(): Promise<ReceiptModel[]> {
-  return dbExecute(() =>
-    prisma.receipt.findMany());
+    prisma.receipt.create({ data: dataInput }));
 }
 
 export async function getReceiptsByProjectService(projectId: string): Promise<ReceiptModel[]> {
