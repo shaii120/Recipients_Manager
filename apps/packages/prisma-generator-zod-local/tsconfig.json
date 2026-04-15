@@ -3,11 +3,9 @@
   "compilerOptions": {
     "outDir": "dist",
     "rootDir": "src",
-    "paths": {
-      "@/*": [
-        "./*"
-      ]
-    },
+    "types": [
+      "node"
+    ]
   },
   "exclude": [
     "node_modules"
