@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider = "sqlserver"
+  provider = "postgresql"
 }
 
 // using a local generator because the published one eithet out of support or doesn't fully supprt ESM
