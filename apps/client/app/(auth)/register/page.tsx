@@ -8,6 +8,7 @@ import { useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { RegisterSchema } from "@receipts/shared-schemas/auth";
 import styles from "@/components/Auth/auth.module.css";
+import { registerUser } from "@/lib/auth";
 
 const extendedSchema = RegisterSchema.extend({
   confirmPassword: z.string(),
@@ -31,18 +32,7 @@ export default function RegisterPage() {
 
   async function onSubmit(data: any) {
     try {
-      const res = await fetch("/api/auth/register", {
-        method: "POST",
-        credentials: "include",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          email: data.email,
-          password: data.password,
-        }),
-      });
-
-      if (!res.ok) throw new Error();
-
+      await registerUser(data.email, data.password);
       await login(data.email, data.password);
       router.push("/");
     } catch {

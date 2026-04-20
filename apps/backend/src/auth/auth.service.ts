@@ -1,7 +1,8 @@
+import { UserPublic } from "@receipts/shared-schemas/auth";
 import { prisma } from "../lib/prisma.js";
 import { hashPassword, comparePassword } from "../lib/hash.js";
 import { dbExecute } from "../lib/db.js";
-import { UserPublic, userPublicSelect } from "./auth.types.js";
+import { userPublicSelect } from "./auth.types.js";
 
 
 export async function registerUser(email: string, password: string) {

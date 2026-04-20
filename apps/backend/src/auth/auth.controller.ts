@@ -3,8 +3,7 @@ import { StatusCodes } from "http-status-codes";
 
 import { registerUser, loginUser, getUserById } from "./auth.service.js";
 import { signToken } from "../lib/jwt.js";
-import { RegisterSchema, LoginSchema } from "@receipts/shared-schemas/auth";
-import { UserPublic } from "./auth.types.js";
+import { RegisterSchema, LoginSchema, UserPublic } from "@receipts/shared-schemas/auth";
 
 export async function register(req: Request, res: Response) {
   const data = RegisterSchema.parse(req.body);
