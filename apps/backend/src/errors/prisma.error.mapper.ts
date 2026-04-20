@@ -27,7 +27,10 @@ export function mapPrismaError(err: unknown): never {
         throw new AppError("Resource not found", StatusCodes.NOT_FOUND);
 
       default:
-        throw new AppError("Database error", StatusCodes.INTERNAL_SERVER_ERROR);
+        {
+          console.error("Unhandled Prisma error:", err);
+          throw new AppError("Database error", StatusCodes.INTERNAL_SERVER_ERROR);
+        }
     }
   }
 
