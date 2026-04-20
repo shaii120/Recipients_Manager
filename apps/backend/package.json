@@ -4,14 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "clean": "rm -rf dist && rm -rf node_modules",
+    "clean": "rm -rf dist && rm -rf node_modules && rm tsconfig.tsbuildinfo",
     "dev": "tsx watch src/server.ts",
+    "start": "node dist/server.js",
+    "build": "tsc -b",
+    "build:full": "pnpm install && pnpm prisma migrate deploy && pnpm -F recipients-manager run build:server",
     "prisma:generate": "prisma generate",
-    "prisma:zod:generate": "prisma generate --generator zod",
-    "generator:build": "pnpm -F prisma-generator-zod-local run build",
-    "generator:watch": "pnpm -F prisma-generator-zod-local run watch",
-    "setup": "pnpm install && pnpm run prisma:generate"
+    "prisma:zod:generate": "prisma generate --generator zod"
   },
   "keywords": [],
   "author": "",
@@ -41,6 +40,7 @@
     "@types/jsonwebtoken": "^9.0.10",
     "@types/node": "^25.5.0",
     "ts-node": "^10.9.2",
-    "tsx": "^4.21.0"
+    "tsx": "^4.21.0",
+    "typescript": "^6.0.3"
   }
 }
