@@ -1,0 +1,28 @@
+{
+    "name": "prisma-my-db",
+    "version": "1.0.0",
+    "type": "module",
+    "scripts": {
+        "build": "tsc -b",
+        "clean": "rm -rf dist node_modules tsconfig.tsbuildinfo",
+        "generate": "prisma generate",
+        "migrate:deploy": "prisma migrate deploy",
+        "prisma:zod:generate": "prisma generate --generator zod"
+    },
+    "exports": {
+        "./connector": "./dist/prisma.js"
+    },
+    "devDependencies": {
+        "@types/node": "^25.6.0",
+        "typescript": "^6.0.3"
+    },
+    "dependencies": {
+        "@prisma/adapter-pg": "^7.7.0",
+        "@prisma/client": "^7.7.0",
+        "@prisma/generator-helper": "^7.7.0",
+        "dotenv": "^17.4.2",
+        "pg": "^8.20.0",
+        "prisma": "^7.7.0",
+        "prisma-generator-zod-local": "workspace:*"
+    }
+}

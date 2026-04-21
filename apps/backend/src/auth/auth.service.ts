@@ -1,5 +1,5 @@
 import { UserPublic } from "@receipts/shared-schemas/auth";
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "prisma-my-db/connector";
 import { hashPassword, comparePassword } from "../lib/hash.js";
 import { dbExecute } from "../lib/db.js";
 import { userPublicSelect } from "./auth.types.js";

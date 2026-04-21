@@ -4,22 +4,18 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "clean": "rm -rf dist && rm -rf node_modules && rm tsconfig.tsbuildinfo",
+    "clean": "rm -rf dist node_modules tsconfig.tsbuildinfo",
     "dev": "tsx watch src/server.ts",
     "start": "node dist/server.js",
     "build": "tsc -b",
-    "build:full": "pnpm install && pnpm prisma migrate deploy && pnpm -F recipients-manager run build:server",
-    "prisma:generate": "prisma generate",
-    "prisma:zod:generate": "prisma generate --generator zod"
+    "build:full": "pnpm install && pnpm -F prisma-my-db run migrate:deploy && pnpm -F recipients-manager run build:server"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
   "type": "module",
   "dependencies": {
-    "@prisma/adapter-pg": "^7.7.0",
-    "@prisma/client": "^7.5.0",
-    "@prisma/generator-helper": "^7.5.0",
+    "@prisma/client": "^7.7.0",
     "@receipts/shared-schemas": "workspace:*",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
@@ -28,9 +24,7 @@
     "express": "^5.2.1",
     "http-status-codes": "^2.3.0",
     "jsonwebtoken": "^9.0.3",
-    "pg": "^8.20.0",
-    "prisma": "^7.5.0",
-    "prisma-generator-zod-local": "file:..\\packages\\prisma-generator-zod-local",
+    "prisma-my-db": "workspace:*",
     "zod": "^4.3.6"
   },
   "devDependencies": {

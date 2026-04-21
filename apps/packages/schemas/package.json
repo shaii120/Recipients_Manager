@@ -10,7 +10,7 @@
         "./generated": "./dist/generated/index.js"
     },
     "scripts": {
-        "clean": "rm -rf dist && rm -rf node_modules && rm tsconfig.tsbuildinfo",
+        "clean": "rm -rf dist node_modules tsconfig.tsbuildinfo",
         "build": "tsc -b"
     },
     "dependencies": {

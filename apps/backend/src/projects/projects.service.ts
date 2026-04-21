@@ -1,6 +1,6 @@
-import { prisma } from '../lib/prisma.js';
-import { dbExecute } from "../lib/db.js";
+import { prisma } from 'prisma-my-db/connector';
 import { ProjectUpdate, ProjectCreate } from "@receipts/shared-schemas/generated";
+import { dbExecute } from "../lib/db.js";
 
 export async function createProject(creatorId: string, projectData: ProjectCreate) {
     return dbExecute(() => prisma.project.create({

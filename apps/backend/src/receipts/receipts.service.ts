@@ -1,4 +1,4 @@
-import { prisma } from "../lib/prisma.js";
+import { prisma } from "prisma-my-db/connector";
 import { dbExecute } from "../lib/db.js";
 import { ReceiptCreate, ReceiptModel } from "@receipts/shared-schemas";
 

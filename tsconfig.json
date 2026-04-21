@@ -27,6 +27,9 @@
         },
         {
             "path": "apps/packages/schemas"
+        },
+        {
+            "path": "apps/packages/prisma-db"
         }
     ]
 }

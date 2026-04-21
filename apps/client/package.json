@@ -7,7 +7,7 @@
     "build": "next build",
     "full_build": "pnpm -F recipients-manager run build:client",
     "start": "next start",
-    "clean": "rm -rf dist && rm -rf node_modules && rm -rf .next"
+    "clean": "rm -rf dist node_modules .next tsconfig.tsbuildinfo"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.2.2",
